@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - main
-      - develop
+      - develop # puedes añadir más ramas
   pull_request:
     branches:
       - main
-      - develop
+      - develop # puedes añadir más ramas
   schedule:
+    # Ejecutar todos los días a las 8:00 AM hora Perú (UTC-5) → 1:00 PM UTC
     - cron: '0 13 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # Permite ejecución manual desde GitHub Actions UI
 
 jobs:
   dockerhub:
@@ -22,9 +23,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Login a Docker Hub (Actualizado a v3)
+      # 2. Login a Docker Hub
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}
           password: ${{ secrets.DOCKERHUB_TOKEN_ANGEL }}
@@ -37,5 +38,5 @@ jobs:
           file: ./dockerfile-angel/Dockerfile
           push: true
           tags: |
-            jazett/pipeline-t02-be:latest
-            jazett/pipeline-t02-be:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
