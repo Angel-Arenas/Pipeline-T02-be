@@ -40,5 +40,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest
-            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
-            
+            ${{ secrets.DOCKERHUB_TOKEN_ANGEL }}/pipeline-t02-be:${{ github.sha }}
