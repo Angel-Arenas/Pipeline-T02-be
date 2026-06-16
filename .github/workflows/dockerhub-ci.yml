@@ -32,12 +32,10 @@ jobs:
       # 3. Build y Push con tags latest y SHA
       - name: Build and Push Docker Image to Docker Hub
         uses: docker/build-push-action@v5
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}
         with:
           context: .
           file: ./dockerfile-angel/Dockerfile
           push: true
           tags: |
-            ${{ env.DOCKER_USER }}/pipeline-t02-be:latest
-            ${{ env.DOCKER_USER }}/pipeline-t02-be:${{ github.sha }}
+            jazett/pipeline-t02-be:latest
+            jazett/pipeline-t02-be:${{ github.sha }}
