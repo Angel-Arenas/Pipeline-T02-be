@@ -29,15 +29,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}
           password: ${{ secrets.DOCKERHUB_TOKEN_ANGEL }}
-      - name: Check Secrets
-        run: echo "El usuario es: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}"
 
       # 3. Build y Push con tags latest y SHA
       - name: Build and Push Docker Image to Docker Hub
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
-          #dockerfile: Dockerfile   # Dockerfile en la raíz del proyecto
-          file: ./dockerfile-angel/Dockerfile        # Dockerfile en la carpeta dockerfile-angel
+          file: ./dockerfile-angel/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest, ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
