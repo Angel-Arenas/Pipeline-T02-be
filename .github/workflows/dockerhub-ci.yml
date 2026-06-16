@@ -4,15 +4,14 @@ on:
   push:
     branches:
       - main
-      - develop # puedes añadir más ramas
+      - develop
   pull_request:
     branches:
       - main
-      - develop # puedes añadir más ramas
+      - develop
   schedule:
-    # Ejecutar todos los días a las 8:00 AM hora Perú (UTC-5) → 1:00 PM UTC
     - cron: '0 13 * * *'
-  workflow_dispatch:  # Permite ejecución manual desde GitHub Actions UI
+  workflow_dispatch:
 
 jobs:
   dockerhub:
@@ -23,9 +22,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Login a Docker Hub
+      # 2. Login a Docker Hub (Actualizado a v3)
       - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}
           password: ${{ secrets.DOCKERHUB_TOKEN_ANGEL }}
@@ -33,10 +32,12 @@ jobs:
       # 3. Build y Push con tags latest y SHA
       - name: Build and Push Docker Image to Docker Hub
         uses: docker/build-push-action@v5
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}
         with:
           context: .
           file: ./dockerfile-angel/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest
-            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
+            ${{ env.DOCKER_USER }}/pipeline-t02-be:latest
+            ${{ env.DOCKER_USER }}/pipeline-t02-be:${{ github.sha }}
