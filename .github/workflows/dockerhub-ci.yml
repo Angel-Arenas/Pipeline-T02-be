@@ -39,5 +39,6 @@ jobs:
           file: ./dockerfile-angel/Dockerfile        # Dockerfile en la carpeta dockerfile-angel
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t00-be:latest
-            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t00-be:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:latest
+            ${{ secrets.DOCKERHUB_USERNAME_ANGEL }}/pipeline-t02-be:${{ github.sha }}
+            
